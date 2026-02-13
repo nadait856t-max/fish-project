@@ -1,0 +1,190 @@
+<!DOCTYPE html>
+<html lang="th">
+<head>
+<meta charset="UTF-8">
+<title>ระบบตรวจสอบความหนาแน่นฝูงปลาแม่น้ำโขง</title>
+
+<style>
+body{
+    margin:0;
+    font-family: 'Segoe UI', sans-serif;
+    background:#eef6f9;
+}
+
+header{
+    background:linear-gradient(to right,#0077b6,#00b4d8);
+    color:white;
+    text-align:center;
+    padding:25px;
+}
+
+nav{
+    background:#023e8a;
+    display:flex;
+    justify-content:center;
+    flex-wrap:wrap;
+}
+
+nav a{
+    color:white;
+    padding:15px 20px;
+    text-decoration:none;
+}
+
+nav a:hover{
+    background:#0077b6;
+}
+
+.card{
+    background:white;
+    margin:15px;
+    padding:20px;
+    border-radius:12px;
+    box-shadow:0 4px 8px rgba(0,0,0,0.1);
+}
+
+.grid{
+    display:grid;
+    grid-template-columns: repeat(auto-fit,minmax(180px,1fr));
+    gap:15px;
+}
+
+.box{
+    background:#caf0f8;
+    padding:15px;
+    border-radius:10px;
+    text-align:center;
+}
+
+table{
+    width:100%;
+    border-collapse:collapse;
+    font-size:14px;
+}
+
+table th, table td{
+    border:1px solid #ccc;
+    padding:8px;
+    text-align:center;
+}
+
+table th{
+    background:#0077b6;
+    color:white;
+}
+
+footer{
+    text-align:center;
+    padding:15px;
+    background:#023e8a;
+    color:white;
+    margin-top:20px;
+}
+
+@media(max-width:600px){
+    header h1{
+        font-size:20px;
+    }
+}
+</style>
+</head>
+
+<body>
+
+<header>
+    <h1>🐟 ระบบตรวจสอบความหนาแน่นฝูงปลาแม่น้ำโขง</h1>
+    <p>โครงงานเทคโนโลยีเพื่อการอนุรักษ์ทรัพยากรน้ำ</p>
+</header>
+
+<nav>
+    <a href="#dashboard">แดชบอร์ด</a>
+    <a href="#data">ข้อมูลฝูงปลา</a>
+    <a href="#about">เกี่ยวกับโครงงาน</a>
+</nav>
+
+<section id="dashboard" class="card">
+    <h2>📊 แดชบอร์ด</h2>
+    <div class="grid">
+        <div class="box">
+            <h3>ความหนาแน่น</h3>
+            <p id="density" style="font-size:28px;">0</p>
+            <span>ตัว/ตร.ม.</span>
+        </div>
+        <div class="box">
+            <h3>สถานะระบบ</h3>
+            <p id="status">ปกติ</p>
+        </div>
+        <div class="box">
+            <h3>คุณภาพน้ำ</h3>
+            <p id="water">ดี</p>
+        </div>
+    </div>
+</section>
+
+<section id="data" class="card">
+    <h2>🐠 ข้อมูลฝูงปลา</h2>
+    <table>
+        <tr>
+            <th>เวลา</th>
+            <th>จำนวนปลา</th>
+            <th>พื้นที่</th>
+            <th>ความหนาแน่น</th>
+        </tr>
+        <tbody id="dataTable"></tbody>
+    </table>
+</section>
+
+<section id="about" class="card">
+    <h2>📘 เกี่ยวกับโครงงาน</h2>
+    <p>
+        ระบบนี้พัฒนาเพื่อใช้ตรวจสอบความหนาแน่นของฝูงปลาใกล้ตลิ่งแม่น้ำโขง  
+        โดยใช้เทคโนโลยีดิจิทัลและการประมวลผลข้อมูล เพื่อช่วยการอนุรักษ์ระบบนิเวศ
+    </p>
+</section>
+
+<footer>
+    <p>โครงงานนักเรียน | ระบบตรวจสอบความหนาแน่นฝูงปลาแม่น้ำโขง</p>
+</footer>
+
+<script>
+function randomData(){
+    return Math.floor(Math.random()*80)+20;
+}
+
+const densityEl = document.getElementById("density");
+const statusEl = document.getElementById("status");
+const waterEl = document.getElementById("water");
+const table = document.getElementById("dataTable");
+
+function updateData(){
+    let fish = randomData();
+    let area = 10; 
+    let density = (fish/area).toFixed(1);
+
+    densityEl.innerText = density;
+
+    if(density > 6){
+        statusEl.innerText = "หนาแน่นสูง";
+        statusEl.style.color = "red";
+    }else{
+        statusEl.innerText = "ปกติ";
+        statusEl.style.color = "green";
+    }
+
+    waterEl.innerText = "ดี";
+
+    let time = new Date().toLocaleTimeString();
+    let row = `<tr>
+        <td>${time}</td>
+        <td>${fish}</td>
+        <td>${area}</td>
+        <td>${density}</td>
+    </tr>`;
+    table.innerHTML = row + table.innerHTML;
+}
+
+setInterval(updateData,3000);
+</script>
+
+</body>
+</html>
