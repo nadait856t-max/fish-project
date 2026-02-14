@@ -390,15 +390,20 @@ async function loadSheetData(){
         const res = await fetch(SHEET_API);
         const text = await res.text();
 
-        // 🔥 แยก JSON ออกมาแบบชัวร์
+        // แยก JSON
         const start = text.indexOf("{");
         const end = text.lastIndexOf("}");
         const jsonText = text.substring(start, end + 1);
         const json = JSON.parse(jsonText);
 
-        const rows = json.table.rows;
+        let rows = json.table.rows;
 
-        if(!rows || rows.length === 0){
+        // ❗ ตัด header row ออก
+        if(rows.length > 0){
+            rows = rows.filter(r => r.c[0]?.v); // เอาเฉพาะแถวที่มีเวลา
+        }
+
+        if(rows.length === 0){
             document.getElementById("dataBox").innerHTML = "ยังไม่มีข้อมูลในระบบ";
             return;
         }
@@ -426,7 +431,8 @@ async function loadSheetData(){
 }
 
 loadSheetData();
-setInterval(loadSheetData, 10000); // รีเฟรชทุก 10 วิ
+setInterval(loadSheetData, 10000);
+
 
         
 </script>
