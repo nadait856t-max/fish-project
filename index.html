@@ -13,46 +13,71 @@
     font-family:"Segoe UI",Tahoma,sans-serif;
 }
 
-/* ===== BACKGROUND ===== */
 body{
-    min-height:100vh;
-    background:linear-gradient(120deg,#0B3C5D,#0E7490,#1E88E5,#4FC3F7);
-    background-size:400% 400%;
-    animation:bgMove 18s ease infinite;
+    background:linear-gradient(120deg,#E0F7FA,#B2EBF2,#E0F2F1);
+    background-size:300% 300%;
+    animation:bgFlow 15s ease infinite;
 }
 
 /* ===== HEADER ===== */
 .header{
-    backdrop-filter:blur(12px);
-    background:rgba(255,255,255,0.12);
+    background:linear-gradient(to right,#0B3C5D,#0E7490,#1E88E5);
     color:white;
-    padding:14px 18px;
+    padding:12px 14px;
     display:flex;
     align-items:center;
     position:fixed;
     width:100%;
     top:0;
     z-index:1000;
-    border-bottom:1px solid rgba(255,255,255,0.25);
-    box-shadow:0 8px 30px rgba(0,0,0,0.35);
+    box-shadow:0 4px 12px rgba(0,0,0,0.35);
     animation:slideDown 1s ease;
 }
 
 .menu-btn{
     font-size:28px;
     cursor:pointer;
-    margin-right:15px;
-    transition:0.4s;
+    margin-right:12px;
+    transition:0.3s;
 }
 .menu-btn:hover{
-    transform:scale(1.2) rotate(8deg);
-    color:#81D4FA;
+    transform:scale(1.15);
+    color:#B2EBF2;
 }
 
 .header-title{
     font-size:16px;
-    font-weight:600;
-    letter-spacing:1px;
+    font-weight:bold;
+    flex:1;
+}
+
+/* ===== SEARCH ===== */
+.search-box{
+    display:flex;
+    align-items:center;
+    background:rgba(255,255,255,0.2);
+    border-radius:20px;
+    padding:4px 10px;
+    backdrop-filter:blur(5px);
+}
+
+.search-box input{
+    border:none;
+    outline:none;
+    background:transparent;
+    color:white;
+    width:150px;
+    padding:5px;
+}
+
+.search-box input::placeholder{
+    color:#E0F2F1;
+}
+
+.search-btn{
+    cursor:pointer;
+    font-size:16px;
+    margin-left:5px;
 }
 
 /* ===== SIDEBAR ===== */
@@ -62,13 +87,12 @@ body{
     left:-320px;
     width:300px;
     height:100%;
-    backdrop-filter:blur(18px);
-    background:rgba(15,60,90,0.75);
+    background:linear-gradient(to bottom,#0B3C5D,#0E7490,#00796B);
     color:white;
-    padding:22px;
-    transition:0.5s cubic-bezier(.77,0,.18,1);
+    padding:20px;
+    transition:0.45s ease;
     z-index:999;
-    box-shadow:6px 0 30px rgba(0,0,0,0.5);
+    box-shadow:4px 0 12px rgba(0,0,0,0.4);
 }
 
 .sidebar.active{ left:0; }
@@ -77,36 +101,51 @@ body{
     font-size:22px;
     text-align:right;
     cursor:pointer;
-    margin-bottom:25px;
-    transition:0.4s;
+    margin-bottom:20px;
+    transition:0.3s;
 }
 .close-btn:hover{
-    transform:rotate(180deg) scale(1.2);
-    color:#81D4FA;
+    transform:rotate(90deg);
+    color:#B2EBF2;
 }
+
+.menu-group{ margin-top:10px; }
 
 .menu-title{
     color:#81D4FA;
     font-weight:bold;
-    margin:18px 0 8px 0;
+    margin:14px 0 6px 0;
     font-size:14px;
-    letter-spacing:1px;
 }
 
 .menu-item{
-    padding:12px 14px;
+    padding:10px 12px;
     cursor:pointer;
-    border-radius:12px;
-    margin-bottom:8px;
-    transition:0.4s;
+    border-radius:8px;
+    margin-left:8px;
+    margin-bottom:5px;
+    transition:0.3s;
     position:relative;
-    background:rgba(255,255,255,0.05);
+}
+
+.menu-item::before{
+    content:"";
+    position:absolute;
+    left:0;
+    top:0;
+    width:4px;
+    height:100%;
+    background:#4FC3F7;
+    opacity:0;
+    transition:0.3s;
+    border-radius:4px;
 }
 
 .menu-item:hover{
-    background:rgba(255,255,255,0.18);
-    transform:translateX(8px) scale(1.03);
+    background:rgba(255,255,255,0.15);
+    padding-left:22px;
 }
+.menu-item:hover::before{ opacity:1; }
 
 /* ===== OVERLAY ===== */
 .overlay{
@@ -115,44 +154,34 @@ body{
     left:0;
     width:100%;
     height:100%;
-    background:rgba(0,0,0,0.55);
+    background:rgba(0,0,0,0.45);
     display:none;
     z-index:998;
-    animation:fadeIn 0.5s;
 }
 .overlay.active{ display:block; }
 
 /* ===== CONTENT ===== */
 .content{
-    padding:95px 18px 30px 18px;
+    padding:90px 15px 25px 15px;
+    animation:fadeIn 1.5s ease;
 }
 
-/* ===== GLASS SECTION ===== */
+/* ===== SECTION ===== */
 .section{
     display:none;
-    backdrop-filter:blur(16px);
-    background:rgba(255,255,255,0.15);
-    padding:28px;
-    border-radius:20px;
+    background:white;
+    padding:24px;
+    border-radius:14px;
     line-height:1.9;
-    color:white;
-    border:1px solid rgba(255,255,255,0.25);
-    box-shadow:0 15px 40px rgba(0,0,0,0.45);
-    animation:fadeUp 0.9s ease;
+    box-shadow:0 10px 25px rgba(0,0,0,0.12);
+    animation:fadeUp 0.8s ease;
 }
-
 .section.active{ display:block; }
 
-h1{
-    color:#E3F2FD;
-    margin-bottom:10px;
-}
-h2{
-    color:#B3E5FC;
-    margin-top:20px;
-}
+h1{ color:#0B3C5D; }
+h2{ color:#0E7490; }
 
-/* ===== ANIMATIONS ===== */
+/* ===== ANIMATION ===== */
 @keyframes slideDown{
     from{transform:translateY(-100%);opacity:0;}
     to{transform:translateY(0);opacity:1;}
@@ -162,10 +191,10 @@ h2{
     to{opacity:1;}
 }
 @keyframes fadeUp{
-    from{transform:translateY(30px);opacity:0;}
+    from{transform:translateY(20px);opacity:0;}
     to{transform:translateY(0);opacity:1;}
 }
-@keyframes bgMove{
+@keyframes bgFlow{
     0%{background-position:0% 50%;}
     50%{background-position:100% 50%;}
     100%{background-position:0% 50%;}
@@ -175,74 +204,76 @@ h2{
 
 <body>
 
-<!-- HEADER -->
 <div class="header">
     <div class="menu-btn" onclick="toggleMenu()">☰</div>
-    <div class="header-title">SCIENCE CHUMPHOL · MEKONG PROJECT</div>
+    <div class="header-title">science chumphol</div>
+    <div class="search-box">
+        <input type="text" id="searchInput" placeholder="ค้นหาข้อมูลในโครงงาน...">
+        <div class="search-btn" onclick="searchText()">🔍</div>
+    </div>
 </div>
 
-<!-- SIDEBAR -->
 <div class="sidebar" id="sidebar">
     <div class="close-btn" onclick="toggleMenu()">✕</div>
-
     <div class="menu-item" onclick="openSection('home')">หน้าแรก</div>
 
-    <div class="menu-title">บทนำ</div>
-    <div class="menu-item" onclick="openSection('origin')">ที่มาและความสำคัญ</div>
+    <div class="menu-group">
+        <div class="menu-title">บทนำ</div>
+        <div class="menu-item" onclick="openSection('origin')">ที่มาและความสำคัญ</div>
+    </div>
 
     <div class="menu-item" onclick="openSection('objective')">วัตถุประสงค์</div>
     <div class="menu-item" onclick="openSection('benefit')">ประโยชน์ที่ได้รับ</div>
     <div class="menu-item" onclick="openSection('summary')">สรุปผล</div>
 </div>
 
-<!-- OVERLAY -->
 <div class="overlay" id="overlay" onclick="toggleMenu()"></div>
 
-<!-- CONTENT -->
 <div class="content">
 
-<!-- HOME -->
 <div id="home" class="section active">
 <h1>หน้าแรก</h1>
 <p><b>ระบบตรวจสอบความหนาแน่นฝูงปลาใกล้ตลิ่งแม่น้ำโขง</b></p>
 <p>โครงงานวิทยาศาสตร์และเทคโนโลยีเพื่อการอนุรักษ์ทรัพยากรธรรมชาติและระบบนิเวศลุ่มน้ำโขง</p>
-<p style="opacity:0.7;">(พื้นที่ Dashboard / กราฟ / แผนที่ / Real-time Data)</p>
+<p style="color:gray;">(พื้นที่แสดงกราฟ แผนที่ ภาพระบบ และข้อมูลแบบ Real-time ในอนาคต)</p>
 </div>
 
-<!-- ORIGIN -->
 <div id="origin" class="section">
 <h1>ที่มาและความสำคัญ</h1>
-<p>
-“แม่น้ำโขง” แม่น้ำสายใหญ่ ที่มีต้นกำเนิดมาจากการละลายของน้ำแข็งและหิมะ บริเวณที่ราบสูงทิเบตในตอนเหนือของทิเบต และชิงไห่สาธารณรัฐประชาชนจีน ไหลสู่ประเทศเมียนมา ลาว ไทย กัมพูชา และออกสู่ทะเลที่เวียดนามรวมระยะทางกว่า 4,880 กิโลเมตร...
-</p>
+<p>“แม่น้ำโขง” แม่น้ำสายใหญ่ ... (ข้อความครบตามที่ส่งมา)</p>
 </div>
 
-<!-- OBJECTIVE -->
 <div id="objective" class="section">
 <h1>วัตถุประสงค์</h1>
 <ol>
 <li>เพื่อสร้างระบบตรวจสอบความหนาแน่นฝูงปลาใกล้ตลิ่งแม่น้ำโขง</li>
 <li>เพื่อศึกษาประสิทธิภาพระบบตรวจสอบความหนาแน่นฝูงปลาใกล้ตลิ่งแม่น้ำโขง</li>
-<li>บันทึกสถิติความหนาแน่นฝูงปลา</li>
+<li>บันทึกสถิติความหนาแน่นฝูงปลาตำแหน่งที่ติดตั้งระบบตรวจสอบความหนาแน่นฝูงปลาใกล้ตลิ่งแม่น้ำโขง</li>
 </ol>
 </div>
 
-<!-- BENEFIT -->
 <div id="benefit" class="section">
 <h1>ประโยชน์ที่ได้รับ</h1>
 <ol>
-<li>ได้อุปกรณ์ตรวจสอบความหนาแน่นฝูงปลา</li>
-<li>ได้สถิติปริมาณปลา</li>
-<li>เผยแพร่ข้อมูลผ่านเว็บไซต์</li>
+<li>ได้อุปกรณ์ตรวจสอบความหนาแน่นฝูงปลาใกล้ตลิ่งแม่น้ำโขง</li>
+<li>ได้สถิติปริมาณปลาบริเวณที่ติดตั้งระบบตรวจสอบความหนาแน่นฝูงปลาใกล้ตลิ่งแม่น้ำโขง</li>
+<li>ได้ข้อมูลปริมาณปลาเผยแพร่บนเว็บไซต์</li>
 </ol>
 </div>
 
-<!-- SUMMARY -->
 <div id="summary" class="section">
-<h1>สรุปผล</h1>
-<p>
-ระบบสามารถบันทึกข้อมูลและแสดงผลผ่านเว็บไซต์แบบ Real-time และใช้วิเคราะห์ความสัมพันธ์ระหว่างปริมาณปลาและระดับน้ำ
-</p>
+<h1>5.1 สรุปผล</h1>
+<p>โครงงานระบบตรวจสอบความหนาแน่นฝูงปลาใกล้ตลิ่งแม่น้ำโขง ...</p>
+
+<h2>5.2 อภิปรายผล</h2>
+<p>การตรวจนับปริมาณปลาเป็นการเขียนโปรแกรม ...</p>
+
+<h2>5.3 ข้อเสนอแนะ</h2>
+<ol>
+<li>ควรใช้เซนเซอร์หรือกล้องที่มีประสิทธิภาพเพื่อการตรวจสอบที่แม่นยำ</li>
+<li>ควรมีหลายจุดเป็นสถานีตรวจวัดตลอดลำน้ำโขงเพื่อใช้เป็นฐานข้อมูลลุ่มน้ำโขงนานาชาติ</li>
+<li>ควรสร้างระบบเก็บข้อมูลที่ตัวระบบเพิ่มเติมจาก google sheet เพื่อป้องกันการสูญหายของข้อมูล</li>
+</ol>
 </div>
 
 </div>
@@ -255,9 +286,37 @@ function toggleMenu(){
 
 function openSection(id){
     const sections=document.querySelectorAll(".section");
-    sections.forEach(sec=>sec.classList.remove("active"));
-    document.getElementById(id).classList.add("active");
+    sections.forEach(sec=>{
+        sec.classList.remove("active");
+        sec.style.display="none";
+    });
+
+    const target=document.getElementById(id);
+    target.classList.add("active");
+    target.style.display="block";
+
     toggleMenu();
+}
+
+/* ===== SEARCH FUNCTION (FIXED) ===== */
+function searchText(){
+    let input=document.getElementById("searchInput").value.toLowerCase();
+    let sections=document.querySelectorAll(".section");
+
+    sections.forEach(sec=>{
+        sec.classList.remove("active");
+        if(sec.innerText.toLowerCase().includes(input) && input!==""){
+            sec.style.display="block";
+        }else{
+            sec.style.display="none";
+        }
+    });
+
+    if(input===""){
+        sections.forEach(sec=>sec.style.display="none");
+        document.getElementById("home").classList.add("active");
+        document.getElementById("home").style.display="block";
+    }
 }
 </script>
 
