@@ -382,7 +382,7 @@ function searchText(){
         document.getElementById("home").style.display="block";
     }
 }
-    // ===== GOOGLE SHEET CONNECT =====
+// ===== GOOGLE SHEET CONNECT =====
 const SHEET_API = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR985IrpzPXSvrXPllMB3OvSVnuFiQPMwzHsDxRWtH81wHXbyXFeLEHk23gtfKazbb3S3_uMdjL2XkL/gviz/tq?tqx=out:json";
 
 async function loadSheetData(){
@@ -390,7 +390,10 @@ async function loadSheetData(){
         const res = await fetch(SHEET_API);
         const text = await res.text();
 
-        const json = JSON.parse(text.substring(47).slice(0, -2));
+        // 🔥 แก้ parsing ตรงนี้
+        const jsonText = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/s)[1];
+        const json = JSON.parse(jsonText);
+
         const rows = json.table.rows;
 
         if(rows.length === 0){
@@ -413,13 +416,13 @@ async function loadSheetData(){
         `;
     }catch(e){
         document.getElementById("dataBox").innerHTML = "❌ โหลดข้อมูลไม่สำเร็จ";
-        console.error(e);
+        console.error("Google Sheet Error:", e);
     }
 }
 
 loadSheetData();
 setInterval(loadSheetData, 10000); // รีเฟรชทุก 10 วิ
-
+    
 </script>
 
 </body>
