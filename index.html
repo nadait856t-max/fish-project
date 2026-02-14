@@ -390,8 +390,10 @@ async function loadSheetData(){
         const res = await fetch(SHEET_API);
         const text = await res.text();
 
-        // ✅ parse gviz json
-        const jsonText = text.match(/google\.visualization\.Query\.setResponse\((.*)\);/s)[1];
+        // 🔥 แยก JSON ออกมาแบบชัวร์
+        const start = text.indexOf("{");
+        const end = text.lastIndexOf("}");
+        const jsonText = text.substring(start, end + 1);
         const json = JSON.parse(jsonText);
 
         const rows = json.table.rows;
