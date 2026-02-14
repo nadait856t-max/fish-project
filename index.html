@@ -259,6 +259,20 @@ target="_blank" style="color:#0E7490; font-weight:bold;">คลิกที่�
 <p style="margin-top:14px; font-size:16px; font-weight:bold; color:#0B3C5D;">
 📍 จุดติดตั้งเครื่องตรวจวัดความหนาแน่นฝูงปลา
 </p>
+    <h2>📊 ข้อมูลจากระบบตรวจวัด (Google Sheet)</h2>
+
+<div id="dataBox" style="
+margin-top:15px;
+padding:16px;
+background:#E0F7FA;
+border-radius:12px;
+box-shadow:0 4px 10px rgba(0,0,0,0.15);
+font-size:16px;
+line-height:1.8;
+">
+กำลังโหลดข้อมูลจาก Google Sheet...
+</div>
+
 
 </div>
 
@@ -368,6 +382,44 @@ function searchText(){
         document.getElementById("home").style.display="block";
     }
 }
+    // ===== GOOGLE SHEET CONNECT =====
+const SHEET_API = "https://docs.google.com/spreadsheets/d/e/2PACX-1vR985IrpzPXSvrXPllMB3OvSVnuFiQPMwzHsDxRWtH81wHXbyXFeLEHk23gtfKazbb3S3_uMdjL2XkL/gviz/tq?tqx=out:json";
+
+async function loadSheetData(){
+    try{
+        const res = await fetch(SHEET_API);
+        const text = await res.text();
+
+        const json = JSON.parse(text.substring(47).slice(0, -2));
+        const rows = json.table.rows;
+
+        if(rows.length === 0){
+            document.getElementById("dataBox").innerHTML = "ยังไม่มีข้อมูลในระบบ";
+            return;
+        }
+
+        const last = rows[rows.length - 1].c;
+
+        const เวลา = last[0]?.v || "-";
+        const ระดับน้ำ = last[1]?.v || "-";
+        const ปริมาณปลา = last[2]?.v || "-";
+        const สถานี = last[3]?.v || "-";
+
+        document.getElementById("dataBox").innerHTML = `
+        <b>📍 สถานี:</b> ${สถานี}<br>
+        <b>⏱ เวลา:</b> ${เวลา}<br>
+        <b>🌊 ระดับน้ำ:</b> ${ระดับน้ำ} เมตร<br>
+        <b>🐟 ปริมาณปลา:</b> ${ปริมาณปลา} ตัว
+        `;
+    }catch(e){
+        document.getElementById("dataBox").innerHTML = "❌ โหลดข้อมูลไม่สำเร็จ";
+        console.error(e);
+    }
+}
+
+loadSheetData();
+setInterval(loadSheetData, 10000); // รีเฟรชทุก 10 วิ
+
 </script>
 
 </body>
